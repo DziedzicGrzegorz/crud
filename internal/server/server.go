@@ -15,3 +15,8 @@ func New() *FiberServer {
 
 	return server
 }
+func GroupPath(pathToGroup string, app *fiber.App) fiber.Router {
+	group := app.Group(pathToGroup)
+
+	return group
+}
