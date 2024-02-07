@@ -9,6 +9,13 @@ import (
 )
 
 func StartApi() {
+	dbHandler := cpu.NewDbHandler()
+	err := dbHandler.CreateConnection(context.Background())
+	if err != nil {
+		panic(fmt.Sprintf("cannot connect to database: %s", err))
+	}
+	dbHandler.CreateDatabase(context.Background())
+	defer dbHandler.CloseConnection(context.Background())
 	server := New()
 	api := GroupPath("/api/v1", server.App)
 	//here in loop start all routes available in entire app
