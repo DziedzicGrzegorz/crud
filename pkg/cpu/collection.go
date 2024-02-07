@@ -28,7 +28,7 @@ func NewDbHandler() DbHandler {
 }
 
 func (d *dbHandler) CreateConnection(ctx context.Context) error {
-	pass := os.Getenv("PASS")
+	pass := os.Getenv("MONGO_PASS")
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	opts := options.Client().ApplyURI(fmt.Sprintf("mongodb+srv://GrzegorzDziedzic:%s@restauth.q17o9nt.mongodb.net/?retryWrites=true&w=majority", pass)).SetServerAPIOptions(serverAPI)
 	// Create a new client and connect to the server
@@ -63,7 +63,9 @@ func (d *dbHandler) ListDatabases(ctx context.Context) (mongo.ListDatabasesResul
 
 // create database in cloud
 func (d *dbHandler) CreateDatabase(ctx context.Context) error {
-	err := d.client.Database("cpu").CreateCollection(ctx, "cpu")
+	err := d.client.Database("cpu").CreateCollection(ctx, "cpu2")
+
+	fmt.Println(err)
 
 	if err != nil {
 		return fmt.Errorf("error creating collection: %s", err)
